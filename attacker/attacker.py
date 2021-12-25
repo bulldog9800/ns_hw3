@@ -24,7 +24,8 @@ def log_credentials(username, password):
 def check_credentials(client_data):
 	# TODO: Take a block of client data and search for username/password credentials.
 	# If found, log the credentials to the system by calling log_credentials().
-	raise NotImplementedError
+	#raise NotImplementedError
+	pass
 
 
 def handle_tcp_forwarding(client_socket, client_ip, hostname):
@@ -38,13 +39,17 @@ def handle_tcp_forwarding(client_socket, client_ip, hostname):
 		# TODO: read data from client socket, check for credentials, and forward along to host socket.
 		# Check for POST to '/post_logout' and exit after that request has completed.
 
-		raise NotImplementedError
+		#raise NotImplementedError
+		pass
 
 
 def dns_callback(packet, extra_args):
 	# TODO: Write callback function for handling DNS packets.
 	# Sends a spoofed DNS response for a query to HOSTNAME and calls handle_tcp_forwarding() after successful spoof.
-	raise NotImplementedError
+	if DNS in packet:
+		print("DNS in packet: " + packet.summary())
+
+
 
 
 def sniff_and_spoof(source_ip):
