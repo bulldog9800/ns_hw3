@@ -47,10 +47,10 @@ def dns_callback(packet, extra_args):
 	# TODO: Write callback function for handling DNS packets.
 	# Sends a spoofed DNS response for a query to HOSTNAME and calls handle_tcp_forwarding() after successful spoof.
 	print("The source IP we got is: ", extra_args[0])
-	if DNS in packet:
-		print("DNS in packet: " + packet.summary())
+	if packet.dport == WEB_PORT:
+		print("Got a packet for port 8000: " + packet.summary())
 	else:
-		print("Not a DNS packet: " + packet.summary())
+		print("Got a packet for another port: " + packet.summary())
 
 
 
