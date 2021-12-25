@@ -60,11 +60,12 @@ def sniff_and_spoof(source_ip):
 	# This socket will be used to accept connections from victimized clients.
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.bind((source_ip, WEB_PORT))
+	s.listen(5)
 
 
 	# TODO: sniff for DNS packets on the network. Make sure to pass source_ip
 	# and the socket you created as extra callback arguments.
-	sniff(filter= 'dst port 8000',prn=lambda p: dns_callback(p, (source_ip, s)))
+	sniff(prn=lambda p: dns_callback(p, (source_ip, s)))
 
 
 
