@@ -35,7 +35,6 @@ def handle_tcp_forwarding(client_socket, client_ip, hostname):
 
 		# TODO: accept a new connection from the client on client_socket and
 		# create a new socket to connect to the actual host associated with hostname.
-
 		# TODO: read data from client socket, check for credentials, and forward along to host socket.
 		# Check for POST to '/post_logout' and exit after that request has completed.
 
@@ -51,10 +50,14 @@ def dns_callback(packet, extra_args):
 def sniff_and_spoof(source_ip):
 	# TODO: Open a socket and bind it to the attacker's IP and WEB_PORT.
 	# This socket will be used to accept connections from victimized clients.
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	s.bind((source_ip, WEB_PORT))
+
 
 	# TODO: sniff for DNS packets on the network. Make sure to pass source_ip
-	# and the socket you created as extra callback arguments. 
-	raise NotImplementedError
+	# and the socket you created as extra callback arguments.
+	sniff(prn=lambda p: dns_callback(p, (source_ip, s)))
+
 
 
 def main():
