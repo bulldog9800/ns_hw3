@@ -48,6 +48,8 @@ def dns_callback(packet, extra_args):
 	# Sends a spoofed DNS response for a query to HOSTNAME and calls handle_tcp_forwarding() after successful spoof.
 	if DNS in packet:
 		print("DNS in packet: " + packet.summary())
+	else:
+		print("Not a DNS packet: " + packet.summary())
 
 
 
