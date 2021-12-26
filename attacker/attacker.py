@@ -46,11 +46,9 @@ def handle_tcp_forwarding(client_socket, client_ip, hostname):
 def dns_callback(packet, extra_args):
 	# TODO: Write callback function for handling DNS packets.
 	# Sends a spoofed DNS response for a query to HOSTNAME and calls handle_tcp_forwarding() after successful spoof.
-	print("The source IP we got is: ", extra_args[0])
 	if DNS in packet:
-		print("Got a DNS packet: " + packet.summary())
-	else:
-		print("Got a non DNS packet: " + packet.summary())
+		print("DNS packet: " + packet.summary())
+		print(packet)
 
 
 
@@ -65,7 +63,7 @@ def sniff_and_spoof(source_ip):
 
 	# TODO: sniff for DNS packets on the network. Make sure to pass source_ip
 	# and the socket you created as extra callback arguments.
-	sniff(prn=lambda p: dns_callback(p, (source_ip, s)))
+	sniff(iface="lo", prn=lambda p: dns_callback(p, (source_ip, s)))
 
 
 
