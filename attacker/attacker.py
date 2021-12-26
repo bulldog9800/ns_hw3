@@ -50,7 +50,7 @@ def dns_callback(packet, extra_args):
 		print("DNS packet: " + packet.summary())
 		print("source ip: " + packet.src)
 		print("dest ip: " + packet.dst)
-		print("Requested website: " + d.qd.qname)
+		print("Requested website: " + packet.qd.qname)
 
 
 
