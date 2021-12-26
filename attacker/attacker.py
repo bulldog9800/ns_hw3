@@ -76,7 +76,7 @@ def sniff_and_spoof(source_ip):
 
 	# TODO: sniff for DNS packets on the network. Make sure to pass source_ip
 	# and the socket you created as extra callback arguments.
-	sniff(filter="iface="lo", prn=lambda p: dns_callback(p, (source_ip, s)))
+	sniff(iface="lo", prn=lambda p: dns_callback(p, (source_ip, s)))
 
 
 
